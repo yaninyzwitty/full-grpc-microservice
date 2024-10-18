@@ -1,0 +1,11 @@
+server:
+  port: 50051
+
+database:
+  username: "myuser"
+  password: "mypassword"
+  host: "localhost"
+  port: 5432
+  db_name: "mydatabase"
+  ssl_mode: "disable"
+  timeout: 5s
