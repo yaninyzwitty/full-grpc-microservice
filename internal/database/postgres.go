@@ -24,13 +24,13 @@ func NewDatabaseConnection(ctx context.Context, config *DatabaseConfig) (*pgxpoo
 		return &pgxpool.Pool{}, errors.New("missing required database configuration")
 	}
 
-	connectionUrl := fmt.Sprintf(
-		"postgres://%s:%s@%s:%d/%s?sslmode=%s",
-		config.Username, config.Password, config.Host, config.Port, config.DBName, config.SSLMode,
-	)
+	// connectionUrl := fmt.Sprintf(
+	// 	"postgres://%s:%s@%s:%d/%s?sslmode=%s",
+	// 	config.Username, config.Password, config.Host, config.Port, config.DBName, config.SSLMode,
+	// )
 
 	// connPool, err := pgx.Connect(ctx, connectionUrl)
-	connectionPool, err := pgxpool.New(ctx, connectionUrl)
+	connectionPool, err := pgxpool.New(ctx, "postgres://myuser:mypassword@localhost:5432/mydatabase?sslmode=disable")
 	if err != nil {
 		slog.Error("failed to connect to db", "error", err)
 	}
@@ -39,20 +39,22 @@ func NewDatabaseConnection(ctx context.Context, config *DatabaseConfig) (*pgxpoo
 }
 
 func PingDatabase(ctx context.Context, conn *pgxpool.Pool) error {
-	timeout := 60 * time.Second
+	const timeout = 60 * time.Second
+	const pingInterval = 1 * time.Second
+
 	endTime := time.Now().Add(timeout)
 
 	for time.Now().Before(endTime) {
-		err := conn.Ping(ctx)
-		if err != nil {
-			slog.Error("failed to ping database", "error", err)
-			return err
+		if err := conn.Ping(ctx); err != nil {
+			slog.Error("Failed to ping database", "error", err)
+			time.Sleep(pingInterval)
+			continue
 		}
 
-		slog.Info("successfully pinged database")
-		time.Sleep(1 * time.Second) // Wait 1 second before next ping
+		slog.Info("Successfully pinged database")
+		return nil
 	}
 
-	slog.Info("completed 60 seconds of pinging the database")
-	return nil
+	slog.Info("Completed 60 seconds of pinging the database without success")
+	return fmt.Errorf("database not reachable within timeout period")
 }

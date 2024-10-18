@@ -10,7 +10,7 @@ import (
 
 type Config struct {
 	Server   Server `yaml:"server"`
-	Database DB     `yaml:"server"`
+	Database DB     `yaml:"database"`
 }
 
 type Server struct {
