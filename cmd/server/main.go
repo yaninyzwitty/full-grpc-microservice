@@ -55,7 +55,7 @@ func main() {
 
 	err = database.PingDatabase(ctx, db)
 	if err != nil {
-		slog.Error("Failed to ping database")
+		slog.Error("Failed to ping database", "error", err)
 	}
 
 	// setup grpc server

@@ -3,6 +3,7 @@ module github.com/yaninyzwitty/grpc-microservice-postgres
 go 1.22.1
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.7.1
 	google.golang.org/grpc v1.67.1
 	google.golang.org/protobuf v1.35.1
@@ -10,7 +11,6 @@ require (
 )
 
 require (
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/kr/text v0.2.0 // indirect
