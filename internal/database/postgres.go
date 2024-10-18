@@ -7,7 +7,7 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type DatabaseConfig struct {
@@ -19,25 +19,26 @@ type DatabaseConfig struct {
 	SSLMode  string
 }
 
-func NewDatabaseConnection(ctx context.Context, config *DatabaseConfig) (*pgx.Conn, error) {
+func NewDatabaseConnection(ctx context.Context, config *DatabaseConfig) (*pgxpool.Pool, error) {
 	if config.Username == "" || config.Password == "" || config.Host == "" || config.DBName == "" || config.Port == 0 {
-		return &pgx.Conn{}, errors.New("missing required database configuration")
+		return &pgxpool.Pool{}, errors.New("missing required database configuration")
 	}
 
 	connectionUrl := fmt.Sprintf(
 		"postgres://%s:%s@%s:%d/%s?sslmode=%s",
 		config.Username, config.Password, config.Host, config.Port, config.DBName, config.SSLMode,
 	)
-	conn, err := pgx.Connect(ctx, connectionUrl)
+
+	// connPool, err := pgx.Connect(ctx, connectionUrl)
+	connectionPool, err := pgxpool.New(ctx, connectionUrl)
 	if err != nil {
 		slog.Error("failed to connect to db", "error", err)
 	}
-	err = conn.Ping(ctx)
-	return conn, nil
+	return connectionPool, nil
 
 }
 
-func PingDatabase(ctx context.Context, conn *pgx.Conn) error {
+func PingDatabase(ctx context.Context, conn *pgxpool.Pool) error {
 	timeout := 60 * time.Second
 	endTime := time.Now().Add(timeout)
 

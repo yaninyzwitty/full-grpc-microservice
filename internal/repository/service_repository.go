@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/yaninyzwitty/grpc-microservice-postgres/internal/models"
 )
 
@@ -16,10 +16,10 @@ type UserRepository interface {
 }
 
 type userRepository struct {
-	db *pgx.Conn
+	db *pgxpool.Pool
 }
 
-func NewRepository(db *pgx.Conn) UserRepository {
+func NewRepository(db *pgxpool.Pool) UserRepository {
 	return &userRepository{db}
 }
 func (r *userRepository) CreateUser(ctx context.Context, user models.User) (*models.User, error) {

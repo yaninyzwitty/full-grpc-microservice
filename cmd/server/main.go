@@ -51,7 +51,7 @@ func main() {
 		slog.Error("Failed to create a database connection", "error", err)
 		os.Exit(1)
 	}
-	defer db.Close(ctx)
+	defer db.Close()
 
 	err = database.PingDatabase(ctx, db)
 	if err != nil {
