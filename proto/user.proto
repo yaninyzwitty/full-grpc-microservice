@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./pb";
+
+package photo_sharing_service;
+
+// User model
+message User {
+    string id = 1;
+    string username = 2;
+    string name = 3;
+    string email = 4;
+    string bio = 5;
+    string image_url = 6;
+    google.protobuf.Timestamp created_at = 7; 
+}
+
+// Post model
+message Post {
+    string id = 1;
+    string content = 2;
+    string author_id = 3;  
+    int32 likes = 4;  
+    google.protobuf.Timestamp created_at = 5;
+}
+
+// Comment model
+message Comment {
+    string id = 1;
+    string content = 2;
+    string post_id = 3;  
+    string user_id = 4;  
+    int32 likes = 5;  
+    google.protobuf.Timestamp created_at = 6;  
+}
+
+// CreateComment request
+message CreateCommentInput {
+    string content = 1;
+    string post_id = 2;  
+    string user_id = 3;  
+}
+
+// CreatePost request
+message CreatePostRequest {
+    string content = 1;
+    string author_id = 2;  
+}
+
+// CreateUser request
+message CreateUserRequest {
+    string username = 1;  
+    string name = 2;
+    string email = 3;
+    string bio = 4;
+    string image_url = 5;
+}
+
+// LikePost request
+message LikePostRequest {
+    string post_id = 1;
+    string user_id = 2;  
+}
+
+// LikePost response
+message LikePostResponse {
+    Post post = 1;  
+}
+
+// LikeComment request
+message LikeCommentRequest {
+    string comment_id = 1;
+    string user_id = 2;  
+}
+
+// LikeComment response
+message LikeCommentResponse {
+    Comment comment = 1;  
+}
+
+// Photo Sharing Service
+service PhotoSharingService {
+    rpc CreateUser(CreateUserRequest) returns (User);
+    rpc CreatePost(CreatePostRequest) returns (Post);
+    rpc CreateComment(CreateCommentInput) returns (Comment);
+    rpc LikePost(LikePostRequest) returns (LikePostResponse);  
+    rpc LikeComment(LikeCommentRequest) returns (LikeCommentResponse);  
+}
