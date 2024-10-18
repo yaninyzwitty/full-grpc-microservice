@@ -25,7 +25,7 @@ func main() {
 		slog.Error("Error loading config.yaml", "error", err)
 		os.Exit(1)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 65*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), cfg.Database.Timeout*time.Second)
 	defer cancel()
 
 	dbConfig := &database.DatabaseConfig{
@@ -48,5 +48,7 @@ func main() {
 	if err != nil {
 		slog.Error("Failed to ping database")
 	}
+
+	
 
 }
