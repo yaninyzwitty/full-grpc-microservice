@@ -32,6 +32,7 @@ func NewDatabaseConnection(ctx context.Context, config *DatabaseConfig) (*pgx.Co
 	if err != nil {
 		slog.Error("failed to connect to db", "error", err)
 	}
+	err = conn.Ping(ctx)
 	return conn, nil
 
 }

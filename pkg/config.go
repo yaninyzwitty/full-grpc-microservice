@@ -3,6 +3,7 @@ package pkg
 import (
 	"io"
 	"log/slog"
+	"time"
 
 	"gopkg.in/yaml.v2"
 )
@@ -17,7 +18,13 @@ type Server struct {
 }
 
 type DB struct {
-	DATABASE_URL string `yaml:"database_url"`
+	Username string        `yaml:"username"`
+	Password string        `yaml:"password"`
+	Host     string        `yaml:"host"`
+	Port     int           `yaml:"port"`
+	DBName   string        `yaml:"db_name"`
+	SSLMode  string        `yaml:"ssl_mode"`
+	Timeout  time.Duration `yaml:"timeout"`
 }
 
 func (c *Config) LoadConfig(file io.Reader) error {
