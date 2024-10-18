@@ -8,6 +8,11 @@ import (
 )
 
 type UserService interface {
+	CreateUser(ctx context.Context, user models.User) (*models.User, error)
+	CreatePost(ctx context.Context, post models.Post) (*models.Post, error)
+	LikeComment(ctx context.Context, comment models.Comment) (*models.Comment, error)
+	LikePost(ctx context.Context, post models.Post) (*models.Post, error)
+	CreateComment(ctx context.Context, comment models.Comment) (*models.Comment, error)
 }
 
 type userService struct {

@@ -9,7 +9,7 @@ type User struct {
 	Email     string
 	Bio       string
 	ImageUrl  string
-	createdAt time.Time
+	CreatedAt time.Time
 }
 
 type Post struct {
@@ -25,6 +25,6 @@ type Comment struct {
 	Content   string
 	PostId    string
 	UserId    string
-	likes     int
+	Likes     int
 	CreatedAt time.Time
 }
