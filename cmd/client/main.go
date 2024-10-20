@@ -41,9 +41,9 @@ func main() {
 	defer cancel()
 
 	createUserResult, err := client.CreateUser(ctx, &pb.CreateUserRequest{
-		Username: "Yaninyz witty",
-		Name:     "Ian Mwangi Munyiri",
-		Email:    "kailwitty@gmail.com",
+		Username: "kALI witty",
+		Name:     "Ian Mwangi Munyiri (kw)",
+		Email:    "kaliwitty@outlook.com",
 		Bio:      "Witty is a brilliant name",
 		ImageUrl: "https://images.unsplash.com/photo-1719518870616-8deacda7e18b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQwfHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D",
 	})
@@ -52,10 +52,10 @@ func main() {
 		return
 	}
 
-	slog.Info("User created", "res", createUserResult)
+	slog.Info("User created: ", "res", createUserResult.Id)
 
 	createPostResult, err := client.CreatePost(ctx, &pb.CreatePostRequest{
-		Content:  "It's nice having boobs",
+		Content:  "It's nice having chesticles",
 		AuthorId: createUserResult.Id,
 	})
 
@@ -64,10 +64,10 @@ func main() {
 		return
 	}
 
-	slog.Info("Created post: ", "res", createPostResult)
+	slog.Info("Created post: ", "res", createPostResult.Id)
 
 	createCommentResult, err := client.CreateComment(ctx, &pb.CreateCommentInput{
-		Content: "Yoh! I like that💘",
+		Content: "Yoh! I like that DAMN!💦",
 		PostId:  createPostResult.Id,
 		UserId:  createPostResult.AuthorId,
 	})
@@ -76,6 +76,6 @@ func main() {
 		slog.Error("Failed to create comment", "error", err)
 		return
 	}
-	slog.Info("Created comment: ", "res", createCommentResult)
+	slog.Info("Created comment: ", "res", createCommentResult.Id)
 
 }
