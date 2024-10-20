@@ -10,11 +10,10 @@ import (
 type UserService interface {
 	CreateUser(ctx context.Context, user models.User) (*models.User, error)
 	CreatePost(ctx context.Context, post models.Post) (*models.Post, error)
-	LikeComment(ctx context.Context, comment models.Comment) (*models.Comment, error)
-	LikePost(ctx context.Context, post models.Post) (*models.Post, error)
 	CreateComment(ctx context.Context, comment models.Comment) (*models.Comment, error)
+	LikeComment(ctx context.Context, commentID string) (*models.Comment, error)
+	LikePost(ctx context.Context, postID string) (*models.Post, error)
 }
-
 type userService struct {
 	repo repository.UserRepository
 }
@@ -32,9 +31,9 @@ func (s *userService) CreateComment(ctx context.Context, comment models.Comment)
 func (s *userService) CreatePost(ctx context.Context, post models.Post) (*models.Post, error) {
 	return s.repo.CreatePost(ctx, post)
 }
-func (s *userService) LikeComment(ctx context.Context, comment models.Comment) (*models.Comment, error) {
-	return s.repo.LikeComment(ctx, comment)
+func (s *userService) LikeComment(ctx context.Context, commentID string) (*models.Comment, error) {
+	return s.repo.LikeComment(ctx, commentID)
 }
-func (s *userService) LikePost(ctx context.Context, post models.Post) (*models.Post, error) {
-	return s.repo.LikePost(ctx, post)
+func (s *userService) LikePost(ctx context.Context, postID string) (*models.Post, error) {
+	return s.repo.LikePost(ctx, postID)
 }

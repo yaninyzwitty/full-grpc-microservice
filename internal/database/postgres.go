@@ -26,10 +26,14 @@ func NewDatabaseConnection(ctx context.Context, config *DatabaseConfig) (*pgxpoo
 
 	// connectionUrl := fmt.Sprintf(
 	// 	"postgres://%s:%s@%s:%d/%s?sslmode=%s",
-	// 	config.Username, config.Password, config.Host, config.Port, config.DBName, config.SSLMode,
+	// 	config.Username,
+	// 	config.Password,
+	// 	config.Host,
+	// 	config.Port,
+	// 	config.DBName,
+	// 	config.SSLMode,
 	// )
-
-	// connPool, err := pgx.Connect(ctx, connectionUrl)
+	// "postgres://myuser:mypassword@localhost:5432/mydatabase?sslmode=disable"
 	connectionPool, err := pgxpool.New(ctx, "postgres://myuser:mypassword@localhost:5432/mydatabase?sslmode=disable")
 	if err != nil {
 		slog.Error("failed to connect to db", "error", err)

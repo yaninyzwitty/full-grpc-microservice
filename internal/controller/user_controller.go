@@ -18,8 +18,8 @@ type UserController struct {
 	pb.UnimplementedPhotoSharingServiceServer
 }
 
-func NewUserController(svc *service.UserService) *UserController {
-	return &UserController{service: *svc}
+func NewUserController(svc service.UserService) *UserController {
+	return &UserController{service: svc}
 }
 
 func (c *UserController) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*pb.User, error) {
@@ -81,16 +81,16 @@ func (c *UserController) CreateComment(ctx context.Context, req *pb.CreateCommen
 		Likes:     0,
 	}
 
-	createdPost, err := c.service.CreateComment(ctx, comment)
+	createdComment, err := c.service.CreateComment(ctx, comment)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create comment %v", err)
 	}
 	return &pb.Comment{
-		Id:        createdPost.ID,
-		Content:   createdPost.Content,
-		PostId:    createdPost.PostId,
-		UserId:    createdPost.UserId,
-		Likes:     int32(createdPost.Likes),
+		Id:        createdComment.ID,
+		Content:   createdComment.Content,
+		PostId:    createdComment.PostId,
+		UserId:    createdComment.UserId,
+		Likes:     int32(createdComment.Likes),
 		CreatedAt: timestamppb.New(comment.CreatedAt),
 	}, nil
 }

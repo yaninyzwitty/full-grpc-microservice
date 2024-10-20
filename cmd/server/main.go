@@ -67,7 +67,7 @@ func main() {
 	// set up injects 💉
 	userRepo := repository.NewRepository(db)
 	userService := service.NewUserService(&userRepo)
-	userController := controller.NewUserController(&userService)
+	userController := controller.NewUserController(userService)
 
 	server := grpc.NewServer()
 	pb.RegisterPhotoSharingServiceServer(server, userController)
