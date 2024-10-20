@@ -41,7 +41,7 @@ func main() {
 	defer cancel()
 
 	createUserResult, err := client.CreateUser(ctx, &pb.CreateUserRequest{
-		Username: "Kali witty",
+		Username: "Yaninyz witty",
 		Name:     "Ian Mwangi Munyiri",
 		Email:    "kailwitty@gmail.com",
 		Bio:      "Witty is a brilliant name",
@@ -55,7 +55,7 @@ func main() {
 	slog.Info("User created", "res", createUserResult)
 
 	createPostResult, err := client.CreatePost(ctx, &pb.CreatePostRequest{
-		Content:  "It's nice having great charisma",
+		Content:  "It's nice having boobs",
 		AuthorId: createUserResult.Id,
 	})
 
