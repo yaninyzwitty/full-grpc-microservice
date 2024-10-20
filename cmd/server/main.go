@@ -59,7 +59,7 @@ func main() {
 	}
 
 	// setup grpc server
-	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Database.Port))
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", 50051))
 	if err != nil {
 		slog.Error("Failed to listen", "error", err)
 		os.Exit(1)

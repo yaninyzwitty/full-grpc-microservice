@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE comments (
-    id SERIAL PRIMARY KEY,              
+    id TEXT PRIMARY KEY,              
     content TEXT NOT NULL,              
     post_id TEXT NOT NULL,              -- Change to TEXT to match posts.id
     user_id TEXT NOT NULL,              -- Change to TEXT to match users.id

@@ -28,37 +28,40 @@ func main() {
 		os.Exit(1)
 	}
 
-	address := fmt.Sprintf(":%d", cfg.Server.PORT)
+	address := fmt.Sprintf(":%d", 50051)
 
 	conn, err := grpc.NewClient(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		slog.Error("failed to create a grpc conn")
+		slog.Error("failed to create a grpc conn", "error", err)
 	}
+	defer conn.Close()
 	client := pb.NewPhotoSharingServiceClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), cfg.Database.Timeout*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	createUserResult, err := client.CreateUser(ctx, &pb.CreateUserRequest{
-		Username: "Yaninyz witty",
+		Username: "Kali witty",
 		Name:     "Ian Mwangi Munyiri",
-		Email:    "ianmwa143@gmail.com",
+		Email:    "kailwitty@gmail.com",
 		Bio:      "Witty is a brilliant name",
 		ImageUrl: "https://images.unsplash.com/photo-1719518870616-8deacda7e18b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQwfHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D",
 	})
 	if err != nil {
 		slog.Error("Failed to create user", "error", err)
+		return
 	}
 
 	slog.Info("User created", "res", createUserResult)
 
 	createPostResult, err := client.CreatePost(ctx, &pb.CreatePostRequest{
-		Content:  "It's nice having boobs",
+		Content:  "It's nice having great charisma",
 		AuthorId: createUserResult.Id,
 	})
 
 	if err != nil {
 		slog.Error("Failed to create post", "error", err)
+		return
 	}
 
 	slog.Info("Created post: ", "res", createPostResult)
@@ -71,6 +74,7 @@ func main() {
 
 	if err != nil {
 		slog.Error("Failed to create comment", "error", err)
+		return
 	}
 	slog.Info("Created comment: ", "res", createCommentResult)
 
