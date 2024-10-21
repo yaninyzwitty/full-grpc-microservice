@@ -41,9 +41,9 @@ func main() {
 	defer cancel()
 
 	createUserResult, err := client.CreateUser(ctx, &pb.CreateUserRequest{
-		Username: "kALI witty",
-		Name:     "Ian Mwangi Munyiri (kw)",
-		Email:    "kaliwitty@outlook.com",
+		Username: "DNwitty",
+		Name:     "Ian Mwangi koll (kw)",
+		Email:    "kw@outlook.com",
 		Bio:      "Witty is a brilliant name",
 		ImageUrl: "https://images.unsplash.com/photo-1719518870616-8deacda7e18b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQwfHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D",
 	})
@@ -55,7 +55,7 @@ func main() {
 	slog.Info("User created: ", "res", createUserResult.Id)
 
 	createPostResult, err := client.CreatePost(ctx, &pb.CreatePostRequest{
-		Content:  "It's nice having chesticles",
+		Content:  "Be witty",
 		AuthorId: createUserResult.Id,
 	})
 
